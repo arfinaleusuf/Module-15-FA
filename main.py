@@ -45,6 +45,7 @@ def create_transactions(user : user_dependency, db: db_dependency, new_transacti
     transaction_model = Transactions(**new_transaction.model_dump(), owner_id = user.get('id'))
     db.add(transaction_model)
     db.commit()
+    db.refresh(transaction_model)
 
     return transaction_model
 
