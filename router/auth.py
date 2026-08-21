@@ -60,7 +60,7 @@ def get_current_user(token: Annotated[str, Depends(OAuth2_bearer)]):
     except:
         raise HTTPException(status_code=404, detail='User not found')
 
-@router.post('/createuser')
+@router.post('/auth/register')
 def create_users(db : db_dependency, new_user : CreateUsers):
     user_model = Users(
         username = new_user.username,
