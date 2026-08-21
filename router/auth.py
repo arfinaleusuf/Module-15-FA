@@ -8,7 +8,7 @@ from typing import Annotated
 from fastapi.responses import JSONResponse
 from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
-from jose import jwt
+from jose import jwt, JWTError
 
 
 router = APIRouter()
@@ -57,7 +57,7 @@ def get_current_user(token: Annotated[str, Depends(OAuth2_bearer)]):
         if username is None or user_id is None:
             raise HTTPException(status_code=404, detail='User not found')
         return {'username': username, 'id': user_id}
-    except:
+    except JWTError:
         raise HTTPException(status_code=404, detail='User not found')
 
 @router.post('/auth/register')
