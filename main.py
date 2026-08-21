@@ -78,3 +78,15 @@ def update_transections(user: user_dependency, db: db_dependency, transaction_id
     db.commit()
 
     return JSONResponse(status_code= 200, content={'message':'Transaction Updated Sucessfully'})
+
+@app.delete('/transactions/{transaction_id}')
+def delete_transacrion(user : user_dependency, db : db_dependency, tran_id : int):
+    if user in None:
+        raise HTTPException(status_code=401, detail='Failed Authentication')
+    transaction = db.query(Transactions).filter(Transactions.owner_id == user.get('id')).filter(Transactions.id == tran_id).first()
+
+    if transaction is None:
+        raise HTTPException(status_code=404, detail='Transaction Not Found')
+    db.query(Transactions).filter(Transactions.owner_id == user.get('id')).filter(Transactions.id == tran_id).delete()
+    db.commit()
+    return JSONResponse(status_code=200, content={'message':'Transaction deleted Sucessfully'})
