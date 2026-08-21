@@ -56,7 +56,7 @@ def get_all_transaction(user: user_dependency, db: db_dependency):
     return db.query(Transactions).filter(Transactions.owner_id == user.get('id')).all()
 
 @app.get('/transactions/filter')
-def filter_transaction(user: user_dependency, db: db_dependency, type:Optional[Literal["income", "expense"]] = Query(default=None,  description="Select transaction type"), category: Optional[str] = Query(default= None, example=["food"]), minimum_amount: Optional[float] = None, maximum_amount: Optional[float] = None):
+def filter_transaction(user: user_dependency, db: db_dependency, type:Optional[Literal["income", "expense"]] = Query(default=None,  description="Select transaction type"), category: Optional[str] = Query(default= None, example='food'), minimum_amount: Optional[float] = None, maximum_amount: Optional[float] = None):
     if user is None:
         raise HTTPException(status_code=401, detail='Failed Authentication')
 
