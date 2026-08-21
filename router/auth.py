@@ -76,7 +76,7 @@ def create_users(db : db_dependency, new_user : CreateUsers):
 def login_user(db: db_dependency, form_data : Annotated[OAuth2PasswordRequestForm, Depends()]):
     user = authenticate_user(form_data.username, form_data.password, db)
     if not user:
-        return "Failed authentication"
+        raise HTTPException(status_code=401, detail='Failed Authentication')
 
     token = create_access_token(user.username, user.id, timedelta(minutes=30))
     return {'access_token': token, 'token_type': 'bearer'}

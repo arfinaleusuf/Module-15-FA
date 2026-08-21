@@ -8,6 +8,7 @@ from models import Transactions, Users
 from typing import Annotated, Optional,Literal
 from router import auth
 from router.auth import get_current_user
+from datetime import date
 
 app = FastAPI()
 
@@ -16,6 +17,7 @@ class Transaction(BaseModel):
     amount : float = Field(gt=0)
     type : Literal["income", "expense"]
     category : str
+    date : date
 
 class update_transection(BaseModel):
     title : Optional[str] = None
