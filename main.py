@@ -22,7 +22,7 @@ class Transaction(BaseModel):
 class update_transection(BaseModel):
     title : Optional[str] = None
     amount : Optional[float] = Field(default= None, gt = 0)
-    type : Optional[str] = None
+    type : Literal["income", "expense"] = Optional[str]
     category: Optional[str] = None
 
 models.Base.metadata.create_all(bind=engine)
